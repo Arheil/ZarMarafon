@@ -21,4 +21,6 @@ function getRow(firstRow, secondRow) {
 	}
 }
 
+
+
 console.log(getRow(firstRow, secondRow));
