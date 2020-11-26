@@ -1,24 +1,40 @@
-const firstRow = 'мама мыла раму'; 
-const secondRow = 'собака друг человека';
+import Pokemon from './pokemon.js';
+import { useCounter, changeHP, random, generateLog, innerLogs } from './utilits.js';
 
-function getRow(firstRow, secondRow) {
-	let char1, char2;
+const player1 = new Pokemon ({
+	name: 'Pikachu',
+	type: 'electric',
+	hp: 500,
+	selectors: 'character',
+});
 
-	for (let i = 0; i < firstRow.length; i++) {
-		if (firstRow[i] === 'a') {
-			char1++;
-		}
-	}
-	for(let i = 0; i < secondRow.length; i++) {
-		if (secondRow[i] === 'a') {
-			char2++;
-		}
-	}
-	if (char1 > char2) {
-		return firstRow;
-	} else {
-		return secondRow;
-	}
-}
+const player2 = new Pokemon ({
+	name: 'Charmander',
+	type: 'fire',
+	hp: 450,
+	selectors: 'enemy',
+});
 
-console.log(getRow(firstRow, secondRow));
+
+const $btn = document.getElementById('btn-kick');
+const $btnShield = document.getElementById('btn-shield'); 
+
+const btnCountJolt = useCounter(6, $btn);
+$btn.addEventListener('click', function() {
+	btnCountJolt();
+	player1.changeHP(random(20), function (count) {
+		console.log('Some change after change HP', count);
+		console.log(generateLog(player1, player2, count));
+	});
+	player2.changeHP(random(20), function (count) {
+		console.log('Some change after change HP', count);
+	});
+});
+
+const btnCountShield = useCounter(10, $btnShield);
+$btnShield.addEventListener('click', function () {
+	btnCountShield();
+	player2.changeHP(random(20));	
+});
+
+
